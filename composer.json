@@ -1,16 +1,23 @@
 {
     "name": "eseytgbot/telegram-api",
+    "description": "A lightweight and flexible framework for building Telegram bots in PHP.",
     "type": "project",
+    "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "telegram\\api\\": "src/"
-        }
+      "psr-4": {
+        "Telegram\\Api\\": "src/"
+      }
     },
     "authors": [
-        {
-            "name": "hshmatullah noori",
-            "email": "hshmatullahnoor@gmail.com"
-        }
+      {
+        "name": "Hshmatullah Noori",
+        "email": "hshmatullahnoor@gmail.com"
+      }
     ],
-    "require": {}
-}
+    "require": {
+      "php": "^8.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+  }
+  
