@@ -6,7 +6,7 @@ ini_set('error_log', 'error.log');
 ini_set('display_errors', 0);
 ini_set('error_reporting', E_ALL);
 
-use Classes\Commands\Kernal;
+use App\Commands\Kernal;
 
 require_once 'autoload.php';
 
@@ -20,7 +20,7 @@ if ($update) {
 
 function findCommands()
 {
-    $dir = __DIR__ . '/Classes/Commands/BotCommands/';
+    $dir = __DIR__ . '/App/Commands/BotCommands/';
     $files = scandir($dir);
     $commands = [];
 
@@ -39,7 +39,7 @@ function CallCommands()
     $commands = findCommands();
 
     foreach ($commands as $command) {
-        $className = 'Classes\\Commands\\BotCommands\\' . $command;
+        $className = 'App\\Commands\\BotCommands\\' . $command;
         if (class_exists($className)) {
             try {
                 $className::handle();

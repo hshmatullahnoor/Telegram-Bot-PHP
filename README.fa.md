@@ -8,7 +8,7 @@
 
 ```
 BotStractuer/
-├── Classes/
+├── App/
 │   └── Commands/
 │       ├── BotCommands/    # کلاس‌های دستورات ربات
 │       └── Kernal.php      # هسته اصلی
@@ -43,7 +43,7 @@ const TELEGRAM_WEBHOOK_URL = 'https://your-domain.com/bot.php';
 
 ## افزودن دستورات
 
-کلاس‌های دستور را در پوشه `Classes/Commands/BotCommands/` قرار دهید.
+کلاس‌های دستور را در پوشه `App/Commands/BotCommands/` قرار دهید.
 هر دستور باید در فایل PHP خود با همان نام کلاس باشد.
 
 ## ابزار کمکی (Helper)
@@ -80,7 +80,7 @@ helper webhook:set
 کلاس Schema متدهای روان برای عملیات پایگاه داده فراهم می‌کند:
 
 ```php
-use Classes\Database\Schema;
+use App\Database\Schema;
 
 // انتخاب داده
 Schema::table('users')
@@ -114,7 +114,7 @@ $count = Schema::table('users')
 از کلاس CreateTable برای تعریف ساختار پایگاه داده استفاده کنید:
 
 ```php
-use Classes\Database\CreateTable;
+use App\Database\CreateTable;
 
 class Users extends CreateTable
 {

@@ -83,7 +83,7 @@ function help()
     $table .= $row;
     $table .= makeHelpTable('webhook:delete', 'Delete the webhook URL for the bot.');
     $table .= $row;
-    
+
     echo "+--------------------------------+--------------------------------------------------+\n";
     echo "Usage: helper [command]\n";
     echo "+--------------------------------+--------------------------------------------------+\n";
@@ -100,10 +100,11 @@ function makeHelpTable($command, $description)
 }
 
 
-function setWebHook() {
+function setWebHook()
+{
     $url = TELEGRAM_API_URL . TELEGRAM_TOKEN . '/setWebhook?url=' . TELEGRAM_WEBHOOK_URL;
     $response = file_get_contents($url);
-    
+
     $response = json_decode($response, true);
 
     if ($response['ok'] == true || $response['result'] == true) {
@@ -113,10 +114,11 @@ function setWebHook() {
     }
 }
 
-function deleteWebHook() {
+function deleteWebHook()
+{
     $url = TELEGRAM_API_URL . TELEGRAM_TOKEN . '/deleteWebhook';
     $response = file_get_contents($url);
-    
+
     $response = json_decode($response, true);
 
     if ($response['ok'] == true || $response['result'] == true) {
@@ -129,7 +131,7 @@ function deleteWebHook() {
 
 function FindFiles()
 {
-    $path = __DIR__ . '/Classes/Tables/';
+    $path = __DIR__ . '/App/Tables/';
     $files = scandir($path);
     $classFiles = [];
 
@@ -148,7 +150,7 @@ function Make()
     $classFiles = FindFiles();
 
     foreach ($classFiles as $classFile) {
-        $className = 'Classes\\Tables\\' . $classFile;
+        $className = 'App\\Tables\\' . $classFile;
         if (class_exists($className)) {
             try {
                 $className::up();
@@ -167,7 +169,7 @@ function Fresh()
     $classFiles = FindFiles();
 
     foreach ($classFiles as $classFile) {
-        $className = 'Classes\\Tables\\' . $classFile;
+        $className = 'App\\Tables\\' . $classFile;
         if (class_exists($className)) {
             try {
                 $className::down();
@@ -187,7 +189,7 @@ function Fresh()
 
 function makeTable($tableName)
 {
-    $tablePath = __DIR__ . '/Classes/Tables/' . $tableName . '.php';
+    $tablePath = __DIR__ . '/App/Tables/' . $tableName . '.php';
 
     if (file_exists($tablePath)) {
         echo "Table {$tableName} already exists." . PHP_EOL;
@@ -198,9 +200,9 @@ function makeTable($tableName)
 <?php
 
 
-namespace Classes\Tables;
+namespace App\Tables;
 
-use Classes\Database\CreateTable;
+use App\Database\CreateTable;
 
 class $tableName extends CreateTable
 {
@@ -231,7 +233,7 @@ PHP;
 
 function deleteTable($tableName)
 {
-    $tablePath = __DIR__ . '/Classes/Tables/' . $tableName . '.php';
+    $tablePath = __DIR__ . '/App/Tables/' . $tableName . '.php';
 
     if (file_exists($tablePath)) {
         unlink($tablePath);
@@ -244,7 +246,7 @@ function deleteTable($tableName)
 function deleteCommand($command)
 {
     $commandName = $command;
-    $commandPath = __DIR__ . '/Classes/Commands/BotCommands/' . $commandName . '.php';
+    $commandPath = __DIR__ . '/App/Commands/BotCommands/' . $commandName . '.php';
 
     if (file_exists($commandPath)) {
         unlink($commandPath);
@@ -258,7 +260,7 @@ function deleteCommand($command)
 function makeCommand($command)
 {
     $commandName = $command;
-    $commandPath = __DIR__ . '/Classes/Commands/BotCommands/' . $commandName . '.php';
+    $commandPath = __DIR__ . '/App/Commands/BotCommands/' . $commandName . '.php';
 
     if (file_exists($commandPath)) {
         echo "Command {$commandName} already exists." . PHP_EOL;
@@ -268,12 +270,12 @@ function makeCommand($command)
     $Commandtemplate = <<<PHP
 <?php
 
-namespace Classes\Commands\BotCommands;
+namespace App\Commands\BotCommands;
 
 
-use Classes\Commands\Kernal;
-use Classes\Keyboards\Keyboards;
-use Classes\Telegram\Telegram;
+use App\Commands\Kernal;
+use App\Keyboards\Keyboards;
+use App\Telegram\Telegram;
 
 class \$commandName extends Kernal
 {

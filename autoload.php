@@ -1,9 +1,10 @@
 <?php
 
-// make a autoload function to load the classes from the Classes directory
-// usage example: use Classes\Database\Connection;
+// make a autoload function to load the App from the App directory
+// usage example: use App\Database\Connection;
 
-function autoload($className) {
+function autoload($className)
+{
     // Convert the namespace to a file path
     $filePath = __DIR__ . '/' . str_replace('\\', '/', $className) . '.php';
 

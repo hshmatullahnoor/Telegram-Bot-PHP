@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
       "psr-4": {
-        "Telegram\\Api\\": "src/"
+        "Telegram\\Api\\": "app/"
       }
     },
     "authors": [
