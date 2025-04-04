@@ -3,13 +3,13 @@
     "type": "library",
     "autoload": {
         "psr-4": {
-            "Phpgram\\Phpgram\\": "src/"
+            "telegram\\api\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "meysam noori",
-            "email": "meysamnoori010@gmail.com"
+            "name": "hshmatullah noori",
+            "email": "hshmatullahnoor@gmail.com"
         }
     ],
     "require": {}
