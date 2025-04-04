@@ -1,5 +1,5 @@
 {
-    "name": "telegram/api",
+    "name": "eseytgbot/telegram-api",
     "type": "library",
     "autoload": {
         "psr-4": {
