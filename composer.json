@@ -1,0 +1,16 @@
+{
+    "name": "phpgram/phpgram",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Phpgram\\Phpgram\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "meysam noori",
+            "email": "meysamnoori010@gmail.com"
+        }
+    ],
+    "require": {}
+}
