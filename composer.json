@@ -1,5 +1,5 @@
 {
-    "name": "phpgram/phpgram",
+    "name": "telegram/api",
     "type": "library",
     "autoload": {
         "psr-4": {
