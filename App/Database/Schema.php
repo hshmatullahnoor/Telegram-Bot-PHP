@@ -7,24 +7,27 @@ use PDO;
 
 class Schema extends Connection
 {
-    private static string $tableName;
-    private static string $select;
-    private array $whereConditions = [];
-    private array $values = [];
+    protected static string $tableName;
+    protected string $select = '*';
+    protected array $whereConditions = [];
+    protected array $values = [];
 
     public static function table(string $tableName): self
     {
-        self::$tableName = $tableName;
-        return new self();
+        $instance = new self();
+        $instance::$tableName = $tableName;
+        return $instance;
+    }
+
+    protected function reset(): void
+    {
+        $this->whereConditions = [];
+        $this->values = [];
     }
 
     public function select(string | array $columns): self
     {
-        if (is_array($columns)) {
-            self::$select = implode(", ", $columns);
-        } else {
-            self::$select = $columns;
-        }
+        $this->select = is_array($columns) ? implode(", ", $columns) : $columns;
         return $this;
     }
 
@@ -35,29 +38,34 @@ class Schema extends Connection
         return $this;
     }
 
-    public function get(): array
+    protected function buildQuery(): string
     {
-        $query = "SELECT " . self::$select . " FROM " . self::$tableName;
+        $query = "SELECT {$this->select} FROM " . static::$tableName;
         if (!empty($this->whereConditions)) {
             $query .= " WHERE " . implode(" AND ", $this->whereConditions);
         }
+        return $query;
+    }
 
+    public function get(): array
+    {
+        $query = $this->buildQuery();
         $stmt = self::prepare($query);
         $stmt->execute($this->values);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $this->reset();
+        return $result;
     }
 
     public function first()
     {
-        $query = "SELECT " . self::$select . " FROM " . self::$tableName;
-        if (!empty($this->whereConditions)) {
-            $query .= " WHERE " . implode(" AND ", $this->whereConditions);
-        }
-        $query .= " LIMIT 1";
+        $query = $this->buildQuery() . " LIMIT 1";
 
         $stmt = self::prepare($query);
         $stmt->execute($this->values);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->reset();
+        return $result;
     }
 
     public static function insert(array $data): bool
@@ -84,7 +92,9 @@ class Schema extends Connection
         }
 
         $stmt = self::prepare($query);
-        return $stmt->execute($this->values);
+        $result = $stmt->execute($this->values);
+        $this->reset();
+        return $result;
     }
 
     public function delete(): bool
@@ -95,7 +105,9 @@ class Schema extends Connection
         }
 
         $stmt = self::prepare($query);
-        return $stmt->execute($this->values);
+        $result = $stmt->execute($this->values);
+        $this->reset();
+        return $result;
     }
 
     public function count(): int
@@ -107,10 +119,10 @@ class Schema extends Connection
 
         $stmt = self::prepare($query);
         $stmt->execute($this->values);
-        return (int) $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        $result = (int) $stmt->fetch(PDO::FETCH_ASSOC)['count'];
+        $this->reset();
+        return $result;
     }
-
-
 
     public function findOrInsert(array $data, string $column, string|int $value): ?array
     {

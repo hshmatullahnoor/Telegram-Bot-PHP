@@ -1,0 +1,7 @@
+RewriteEngine On
+
+# فقط اجازه بده اگر مسیر مطابق با /telegram/webhook/{token} هست
+RewriteRule ^telegram/webhook/([^/]+)$ public/bot.php [L]
+
+# برای هر مسیر دیگه‌ای که به اینجا بیاد، ارور 403 بده
+RewriteRule ^.*$ - [F]
